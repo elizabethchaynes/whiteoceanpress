@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>White Ocean Press</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0d1117;
+      --salt: #f5f3ef;
+      --foam: #e8e4dc;
+      --tide: #6b8f9e;
+      --deep: #1e3a4a;
+      --gold: #b89b6a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--salt);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    /* ── OCEAN BACKGROUND ── */
+    .ocean-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .ocean-bg svg {
+      width: 100%;
+      height: 100%;
+      opacity: 0.055;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3.5rem;
+      background: rgba(245, 243, 239, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(107, 143, 158, 0.18);
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--deep);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.25s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 7rem 3.5rem 4rem;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 780px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--tide);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.8rem, 8vw, 7.2rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--deep);
+      margin-bottom: 0.25rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.4s ease forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--tide);
+    }
+
+    .hero-rule {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2.2rem auto;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.65s ease forwards;
+    }
+
+    .hero-sub {
+      font-size: 1.25rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #3a4450;
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s ease forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s ease forwards;
+    }
+
+    .btn {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2.4rem;
+      border: 1px solid;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--deep);
+      border-color: var(--deep);
+      color: var(--salt);
+    }
+    .btn-primary:hover {
+      background: var(--tide);
+      border-color: var(--tide);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(107, 143, 158, 0.5);
+      color: var(--deep);
+    }
+    .btn-ghost:hover {
+      border-color: var(--deep);
+    }
+
+    /* ── WAVE DIVIDER ── */
+    .wave-divider {
+      position: relative;
+      z-index: 1;
+      line-height: 0;
+      margin-top: -2px;
+    }
+    .wave-divider svg { display: block; }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 3.5rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--tide);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--deep);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em { font-style: italic; color: var(--tide); }
+
+    .section-body {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: #444;
+      max-width: 600px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--foam);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(107,143,158,0.35) 0%, transparent 60%),
+                  repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 18px,
+                    rgba(255,255,255,0.025) 18px,
+                    rgba(255,255,255,0.025) 19px
+                  );
+    }
+
+    .about-frame-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(245,243,239,0.6);
+      font-size: 5rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      font-style: italic;
+    }
+
+    .about-frame-text span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-top: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .about-offset {
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 60%;
+      height: 60%;
+      border: 1px solid var(--gold);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* ── TITLES ── */
+    #titles { background: var(--salt); }
+
+    .titles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .book-card {
+      border-top: 1px solid rgba(107,143,158,0.3);
+      padding-top: 1.6rem;
+      transition: transform 0.3s ease;
+    }
+    .book-card:hover { transform: translateY(-4px); }
+
+    .book-spine {
+      width: 100%;
+      aspect-ratio: 2/3;
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-spine-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .book-card:nth-child(1) .book-spine-inner { background: #1e3a4a; }
+    .book-card:nth-child(2) .book-spine-inner { background: #3d5a4c; }
+    .book-card:nth-child(3) .book-spine-inner { background: #4a3d2e; }
+
+    .book-spine-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 12px,
+        rgba(255,255,255,0.03) 12px,
+        rgba(255,255,255,0.03) 13px
+      );
+    }
+
+    .book-title-card {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(245,243,239,0.9);
+      line-height: 1.2;
+      position: relative;
+      z-index: 1;
+    }
+
+    .book-meta {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--tide);
+      margin-bottom: 0.5rem;
+    }
+
+    .book-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #555;
+    }
+
+    /* ── MANIFESTO ── */
+    #manifesto {
+      background: var(--deep);
+      color: var(--salt);
+      text-align: center;
+    }
+
+    #manifesto .section-label { color: rgba(107,143,158,0.7); }
+    #manifesto .section-title { color: var(--salt); }
+    #manifesto .section-title em { color: var(--tide); }
+
+    .manifesto-quote {
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 720px;
+      margin: 0 auto;
+      color: rgba(245,243,239,0.85);
+    }
+
+    .manifesto-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2.5rem auto;
+    }
+
+    /* ── SUBMISSIONS ── */
+    #submissions { background: var(--foam); }
+
+    .submissions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .pill-list {
+      list-style: none;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .pill-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .pill-list li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .submissions-aside {
+      border-left: 1px solid rgba(107,143,158,0.3);
+      padding-left: 3rem;
+    }
+
+    .aside-note {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: #777;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--ink);
+      color: rgba(245,243,239,0.5);
+      padding: 3rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,243,239,0.75);
+    }
+
+    .footer-copy {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,243,239,0.45);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .footer-links a:hover { color: var(--tide); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid,
+      .submissions-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .titles-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 500px) {
+      .titles-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ocean texture background -->
+  <div class="ocean-bg" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+      </defs>
+      <rect width="1440" height="900" filter="url(#noise)" opacity="0.4"/>
+      <path d="M0 600 Q360 540 720 600 Q1080 660 1440 600 L1440 900 L0 900 Z" fill="#6b8f9e"/>
+      <path d="M0 650 Q300 610 600 650 Q900 690 1200 640 Q1320 615 1440 650 L1440 900 L0 900 Z" fill="#1e3a4a" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">White Ocean Press</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#titles">Titles</a></li>
+      <li><a href="#submissions">Submissions</a></li>
+      <li><a href="mailto:hello@whiteoceanpress.com">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Independent Literary Publisher · Est. 2019</p>
+      <h1 class="hero-title">Books that<br/><em>breathe</em></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">We publish fiction, poetry, and essays at the edge of the tide — work that risks stillness, resists noise, and stays with you long after the last page.</p>
+      <div class="hero-cta">
+        <a href="#titles" class="btn btn-primary">Our Catalogue</a>
+        <a href="#submissions" class="btn btn-ghost">Submit a Manuscript</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner about-grid">
+      <div class="about-visual reveal">
+        <div class="about-frame">
+          <div class="about-frame-text">
+            W
+            <span>White Ocean Press</span>
+          </div>
+        </div>
+        <div class="about-offset"></div>
+      </div>
+      <div class="about-text reveal">
+        <p class="section-label">About the Press</p>
+        <h2 class="section-title">Small press,<br/><em>deep waters</em></h2>
+        <p class="section-body">White Ocean Press was founded on a belief that the quietest voices carry the furthest. We are an independent literary publisher working with a small, devoted list of authors whose work refuses easy categorisation.</p>
+        <br/>
+        <p class="section-body">Based between New York and the Scottish coast, we focus on literary fiction, collections of poetry, and long-form essays. We work slowly, with care — no more than six titles a year — because every book deserves to be a considered thing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TITLES -->
+  <section id="titles">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Recent Titles</p>
+        <h2 class="section-title">From our <em>catalogue</em></h2>
+      </div>
+      <div class="titles-grid">
+        <div class="book-card reveal">
+          <div class="book-spine">
+            <div class="book-spine-inner">
+              <div class="book-title-card">The Cartographer's Silence</div>
+            </div>
+          </div>
+          <p class="book-meta">Fiction · 2024</p>
+          <p class="book-desc">A novel about maps, memory, and the places we refuse to name. Shortlisted for the Rathbones Folio Prize.</p>
+        </div>
+        <div class="book-card reveal">
+          <div class="book-spine">
+            <div class="book-spine-inner">
+              <div class="book-title-card">Littoral</div>
+            </div>
+          </div>
+          <p class="book-meta">Poetry · 2024</p>
+          <p class="book-desc">A debut collection that moves between the Irish coastline and a grandmother's kitchen. Elemental and intimate.</p>
+        </div>
+        <div class="book-card reveal">
+          <div class="book-spine">
+            <div class="book-spine-inner">
+              <div class="book-title-card">On Not Knowing</div>
+            </div>
+          </div>
+          <p class="book-meta">Essays · 2023</p>
+          <p class="book-desc">Seven long essays on uncertainty, craft, and the productive strangeness of paying close attention to ordinary things.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto">
+    <div class="section-inner" style="text-align:center;">
+      <div class="reveal">
+        <p class="section-label">Our Conviction</p>
+        <div class="manifesto-rule"></div>
+        <p class="manifesto-quote">"We are not looking for books that sell — we are looking for books that need to exist. There is a difference, and it matters to us absolutely."</p>
+        <div class="manifesto-rule"></div>
+        <p style="font-family:'Raleway',sans-serif; font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; opacity:0.4; margin-top:1rem;">— Founders' Statement, 2019</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMISSIONS -->
+  <section id="submissions">
+    <div class="section-inner submissions-grid">
+      <div class="reveal">
+        <p class="section-label">Submissions</p>
+        <h2 class="section-title">We are <em>reading</em></h2>
+        <p class="section-body">Our submissions window is open year-round for fiction and essays. Poetry collections open each January and September.</p>
+        <ul class="pill-list">
+          <li>Literary fiction (novels and novellas)</li>
+          <li>Collections of essays or lyric prose</li>
+          <li>Poetry collections (full-length only)</li>
+          <li>No genre fiction, thrillers, or YA at this time</li>
+          <li>Previously unpublished work only</li>
+        </ul>
+      </div>
+      <div class="submissions-aside reveal">
+        <p class="section-label">How to Submit</p>
+        <p class="aside-note">Send a query letter, a brief synopsis, and the first 30 pages (for prose) or 10 sample poems to the address below. We read everything, though we typically take 12–16 weeks to respond. We ask for your patience and return it in full.</p>
+        <a href="mailto:submissions@whiteoceanpress.com" class="btn btn-primary" style="display:inline-block;">submissions@whiteoceanpress.com</a>
+        <br/><br/>
+        <p class="aside-note" style="font-style:italic;">No simultaneous submissions to White Ocean Press, please. Notify us immediately if your work is accepted elsewhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">White Ocean Press</div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#titles">Titles</a></li>
+      <li><a href="#submissions">Submissions</a></li>
+      <li><a href="mailto:hello@whiteoceanpress.com">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 White Ocean Press. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 3) * 0.1}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
